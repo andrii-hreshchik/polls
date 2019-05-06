@@ -11,18 +11,17 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 @SpringBootApplication
 @EntityScan(basePackageClasses = {
-		PollsApplication.class,
-		Jsr310JpaConverters.class
+        PollsApplication.class,
+        Jsr310JpaConverters.class
 })
 public class PollsApplication {
 
-	@PostConstruct
-	void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
+    @PostConstruct
+    void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(PollsApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(PollsApplication.class, args);
+    }
 }

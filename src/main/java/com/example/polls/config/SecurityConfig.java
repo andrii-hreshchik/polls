@@ -1,5 +1,9 @@
 package com.example.polls.config;
 
+import com.example.polls.security.CustomUserDetailsService;
+import com.example.polls.security.JwtAuthenticationEntryPoint;
+import com.example.polls.security.JwtAuthenticationFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,11 +28,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 		prePostEnabled = true
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	CustomUserDetailsService customUserDetailsService;
+	private CustomUserDetailsService customUserDetailsService;
+
+	private JwtAuthenticationEntryPoint unauthorizedHandler;
 
 	@Autowired
-	private JwtAuthenticationEntryPoint unauthorizedHandler;
+	public SecurityConfig(
+			CustomUserDetailsService customUserDetailsService, JwtAuthenticationEntryPoint unauthorizedHandler) {
+		this.customUserDetailsService = customUserDetailsService;
+		this.unauthorizedHandler = unauthorizedHandler;
+	}
 
 	@Bean
 	public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -91,6 +100,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 	}
-
-
 }
